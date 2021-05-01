@@ -1,13 +1,9 @@
-import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { handleInitialData } from './actions/shared'
-import Home from './components/Home'
-import LoadingBar from 'react-redux-loading'
-import Nav from './components/Nav'
-import QuestionList from './components/QuestionList'
-import NewQuestion from './components/NewQuestion'
-
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import Spinner from 'react-bootstrap/Spinner';
+import Login from './components/Login';
+import AuthApp from './components/AuthApp';
+import { handleInitialData } from './actions/shared';
 
 class App extends Component {
 	componentDidMount() {
@@ -15,31 +11,32 @@ class App extends Component {
 	}
 
 	render() {
-	
-		return (
-			<Router>
-				<Fragment>
-					<LoadingBar />
-					<div className='container'>
-						<Nav />
-						{this.props.loading === true ? null : (
-							<div>
-								<Route path='/' exact component={Home} />
-								<Route path='/questions' component={QuestionList} />
-								<Route path='/new' component={NewQuestion} />
-							</div>
-						)}
-					</div>
-				</Fragment>
-			</Router>
-		);
+		const { authedUser, loadingBar } = this.props;
+
+		if (loadingBar.default === undefined || loadingBar.default === 1) {
+			//loading
+			return (
+				<div className="d-flex justify-content-center">
+					<Spinner
+						animation="border"
+						role="status"
+						variant="secondary"
+						className="my-5"
+					>
+						<span className="sr-only">Loading...</span>
+					</Spinner>
+				</div>
+			);
+		} else {
+			return <Fragment>{!authedUser ? <Login /> : <AuthApp />}</Fragment>;
+		}
 	}
 }
 
 function mapStateToProps({ authedUser, loadingBar }) {
 	return {
 		authedUser,
-		loadingBar,
+		loadingBar
 	};
 }
 

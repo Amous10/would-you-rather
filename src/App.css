@@ -1,0 +1,32 @@
+body {
+  background-color: #282c34;
+  color: white;
+  padding: 40px;
+  font-family: Arial;
+  text-align: left;
+}
+.wyr {
+  color:#16a2b8;
+  font-weight: bolder;
+  text-shadow: 2px 2px #282c34;
+}
+.container {
+  border: 5px solid #16a2b8;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.card-header {
+ background: #6c757d;
+}
+
+.card-text {
+  color: #282c34;
+}
+a {
+  color: white;
+}
+
+.custom-control-label {
+  color: #282c34;
+}

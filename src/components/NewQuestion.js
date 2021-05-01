@@ -1,64 +1,95 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { handleAddQuestion} from '../actions/questions'
-import { Redirect } from 'react-router-dom'
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { handleAddQuestion } from '../actions/questions';
 
 class NewQuestion extends Component {
-  state = {
-    text: '',
-    toHome: false,
-  }
-  handleChange = (e) => {
-    const text = e.target.value
-    this.setState(() => ({
-      text
-    }))
-  }
-  handleSubmit = (e) => {
-    e.preventDefault()
-    const { text } = this.state
-    const { dispatch, id } = this.props
-    dispatch(handleAddQuestion(text, id))
+	state = {
+		optionOne: '',
+		optionTwo: '',
+		toHome: false
+	};
 
-    this.setState(() => ({
-      text: '',
-      toHome: id ? false : true,
-    }))
-  }
-  render() {
-    const { text, toHome } = this.state
+	handleInputChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		this.setState({
+			[name]: value
+		});
+	};
 
-    if (toHome === true) {
-      return <Redirect to='/' />
-    }
+	handleSubmit = (e) => {
+		const { optionOne, optionTwo } = this.state;
+		const { dispatch } = this.props;
 
-    const tweetLeft = 280 - text.length
+		e.preventDefault();
 
-    return (
-      <div>
-        <h3 className='center'>Compose new Question</h3>
-        <form className='new-tweet' onSubmit={this.handleSubmit}>
-          <textarea
-            placeholder="What's happening?"
-            value={text}
-            onChange={this.handleChange}
-            className='textarea'
-            maxLength={280}
-          />
-          {tweetLeft <= 100 && (
-            <div className='tweet-length'>
-              {tweetLeft}
-            </div>
-          )}
-          <button
-            className='btn'
-            type='submit'
-            disabled={text === ''}>
-              Submit
-          </button>
-        </form>
-      </div>
-    )
-  }
+		this.setState(
+			{
+				optionOne: '',
+				optionTwo: '',
+				toHome: true
+			},
+			() => dispatch(handleAddQuestion(optionOne, optionTwo))
+		);
+	};
+
+	render() {
+		const { optionOne, optionTwo, toHome } = this.state;
+
+		if (toHome === true) return <Redirect to="/" />;
+
+		return (
+			<Fragment>
+				<h2 className="text-center my-3">
+					<small>Would You Rather...</small>
+				</h2>
+				<Row className="justify-content-center">
+					<Col xs={12} md={6}>
+						<Card bg="dark" className="m-3 text-center">
+							<Card.Body>
+								<Form onSubmit={this.handleSubmit}>
+									<Form.Group controlId="optionOne">
+										<Form.Label>Choice One</Form.Label>
+										<Form.Control
+											type="text"
+											name="optionOne"
+											value={optionOne}
+											onChange={this.handleInputChange}
+										/>
+									</Form.Group>
+									<h3>
+										<small>OR</small>
+									</h3>
+									<Form.Group controlId="optionTwo">
+										<Form.Label>Choice Two</Form.Label>
+										<Form.Control
+											type="text"
+											name="optionTwo"
+											value={optionTwo}
+											onChange={this.handleInputChange}
+										/>
+									</Form.Group>
+									<Button
+										type="submit"
+										variant="outline-dark"
+										disabled={optionOne === '' || optionTwo === ''}
+									>
+										Submit
+									</Button>
+								</Form>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</Fragment>
+		);
+	}
 }
-export default connect()(NewQuestion)
+
+export default connect()(NewQuestion);

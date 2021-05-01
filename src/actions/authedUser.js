@@ -10,6 +10,7 @@ export function setAuthedUser(id) {
 
 export function resetAuthedUser(id) {
 	return {
-		type: RESET_AUTHED_USER
+		type: RESET_AUTHED_USER,
+		id
 	};
 }
