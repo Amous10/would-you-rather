@@ -26,7 +26,9 @@ body {
 a {
   color: white;
 }
-
+a:hover, .navbar-dark .navbar-nav .nav-link:hover {
+  color: #16a2b8;
+}
 .custom-control-label {
   color: #282c34;
 }

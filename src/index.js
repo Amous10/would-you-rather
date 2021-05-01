@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
+import './index.css'
 
 
 
