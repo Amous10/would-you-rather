@@ -77,7 +77,7 @@ class NewQuestion extends Component {
 									</Form.Group>
 									<Button
 										type="submit"
-										variant="outline-dark"
+										variant="outline-light"
 										disabled={optionOne === '' || optionTwo === ''}
 									>
 										Submit

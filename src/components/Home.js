@@ -34,11 +34,11 @@ class Home extends Component {
 function mapStateToProps({ authedUser, questions, users }) {
 	const answeredQuestionIds = Object.keys(questions)
 
-  // .filter((id) => users[authedUser].answers.hasOwnProperty(id))
+  .filter((id) => users[authedUser].answers.hasOwnProperty(id))
   .sort((a, b) => questions[b].timestamp - questions[a].timestamp);
   
 	const unansweredQuestionIds = Object.keys(questions)
-  // .filter((id) => !users[authedUser].answers.hasOwnProperty(id))
+  .filter((id) => !users[authedUser].answers.hasOwnProperty(id))
   .sort((a, b) => questions[b].timestamp - questions[a].timestamp);
   
 	return {
